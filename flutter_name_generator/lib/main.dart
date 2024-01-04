@@ -64,44 +64,46 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
         break;
       case 1:
-        page = Placeholder();
+        page = FavouritesPage();
         break;
       default:
-        throw UnimplementedError('No widget for this index!')
+        throw UnimplementedError('No widget for this index!');
     }
-    return Scaffold(
-      body: Row(
-        children: [
-          SafeArea(
-            child: NavigationRail(
-              extended: false,
-              destinations: [
-                NavigationRailDestination(
-                  icon: Icon(Icons.home),
-                  label: Text('Home'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.favorite),
-                  label: Text('Favorites'),
-                ),
-              ],
-              selectedIndex: selectedIndex,
-              onDestinationSelected: (value) {
-                setState(() {
-                  selectedIndex = value;
-                });
-              },
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+        body: Row(
+          children: [
+            SafeArea(
+              child: NavigationRail(
+                extended: constraints.maxWidth >= 600,
+                destinations: [
+                  NavigationRailDestination(
+                    icon: Icon(Icons.home),
+                    label: Text('Home'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.favorite),
+                    label: Text('Favorites'),
+                  ),
+                ],
+                selectedIndex: selectedIndex,
+                onDestinationSelected: (value) {
+                  setState(() {
+                    selectedIndex = value;
+                  });
+                },
+              ),
             ),
-          ),
-          Expanded(
-            child: Container(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              child: GeneratorPage(),
+            Expanded(
+              child: Container(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                child: page,
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -181,5 +183,31 @@ class TextWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class FavouritesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    var favourites = appState.favourites;
+
+    final theme = Theme.of(context);
+    final style = theme.textTheme.displayLarge!.copyWith(
+      color: theme.colorScheme.onPrimary,
+      fontFeatures: <FontFeature>[
+        FontFeature.historicalLigatures(),
+        FontFeature.historicalForms()
+      ],
+      fontFamily: 'SortsMillGoudy-Regular',
+    );
+
+    return ListView(children: [
+      for (var fav in favourites)
+        ListTile(
+          leading: Icon(Icons.favorite),
+          title: Text(fav.asCamelCase),
+        )
+    ]);
   }
 }
