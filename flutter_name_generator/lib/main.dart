@@ -79,9 +79,10 @@ class TextWidget extends StatelessWidget {
     );
 
     return Card(
+      elevation: 10,
       color: theme.colorScheme.primary,
       child: Padding(
-        padding: const EdgeInsets.all(50),
+        padding: const EdgeInsets.all(100),
         child: Text(pair.asPascalCase, style: style),
       ),
     );
