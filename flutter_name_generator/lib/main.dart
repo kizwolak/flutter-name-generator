@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
         title: 'Namer App',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         ),
         home: MyHomePage(),
       ),
@@ -66,6 +68,22 @@ class TextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(pair.asPascalCase);
+    final theme = Theme.of(context);
+    final style = theme.textTheme.displayLarge!.copyWith(
+      color: theme.colorScheme.onPrimary,
+      fontFeatures: <FontFeature>[
+        FontFeature.historicalLigatures(),
+        FontFeature.historicalForms()
+      ],
+      fontFamily: 'SortsMillGoudy-Regular',
+    );
+
+    return Card(
+      color: theme.colorScheme.primary,
+      child: Padding(
+        padding: const EdgeInsets.all(50),
+        child: Text(pair.asPascalCase, style: style),
+      ),
+    );
   }
 }
