@@ -66,7 +66,7 @@ class MyHomePage extends StatelessWidget {
             TextWidget(pair: pair),
             SizedBox(height: 15),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 ElevatedButton(
                     onPressed: () {
