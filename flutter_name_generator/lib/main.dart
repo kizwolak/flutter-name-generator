@@ -34,6 +34,17 @@ class MyAppState extends ChangeNotifier {
     current = WordPair.random();
     notifyListeners();
   }
+
+  var favourites = <WordPair>[];
+
+  void toggleFavourite() {
+    if (favourites.contains(current)) {
+      favourites.remove(current);
+    } else {
+      favourites.add(current);
+    }
+    notifyListeners();
+  }
 }
 
 class MyHomePage extends StatelessWidget {
@@ -51,14 +62,24 @@ class MyHomePage extends StatelessWidget {
               'Ye Olde Flutter Name Generator',
               style: TextStyle(fontSize: 20),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 15),
             TextWidget(pair: pair),
-            SizedBox(height: 10),
-            ElevatedButton(
-                onPressed: () {
-                  appState.GetNext();
-                },
-                child: Text('Next'))
+            SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      appState.toggleFavourite();
+                    },
+                    child: Text("Like!")),
+                ElevatedButton(
+                    onPressed: () {
+                      appState.GetNext();
+                    },
+                    child: Text('Next')),
+              ],
+            )
           ],
         ),
       ),
