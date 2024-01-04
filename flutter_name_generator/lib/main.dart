@@ -43,16 +43,24 @@ class MyHomePage extends StatelessWidget {
     var pair = appState.current;
 
     return Scaffold(
-      body: Column(
-        children: [
-          Text('A random TEST idea:'),
-          TextWidget(pair: pair),
-          ElevatedButton(
-              onPressed: () {
-                appState.GetNext();
-              },
-              child: Text('Next'))
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Ye Olde Flutter Name Generator',
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(height: 10),
+            TextWidget(pair: pair),
+            SizedBox(height: 10),
+            ElevatedButton(
+                onPressed: () {
+                  appState.GetNext();
+                },
+                child: Text('Next'))
+          ],
+        ),
       ),
     );
   }
